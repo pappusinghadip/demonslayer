@@ -1,0 +1,7 @@
+.DS_Store
+.slayer/.temp/
+.claude/slayer/.temp/
+node_modules/
+dist/
+build/
+*.log

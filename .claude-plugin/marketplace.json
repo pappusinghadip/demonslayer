@@ -1,0 +1,20 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "slayer-agents",
+  "description": "Private audit-first Slayers agent workflow.",
+  "owner": {
+    "name": "Pappu Singha"
+  },
+  "plugins": [
+    {
+      "name": "slayer",
+      "description": "Private audit-first engineering agents.",
+      "version": "0.2.1",
+      "author": {
+        "name": "Pappu Singha"
+      },
+      "source": "./plugins/slayer",
+      "category": "development"
+    }
+  ]
+}
