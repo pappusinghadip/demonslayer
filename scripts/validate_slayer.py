@@ -41,6 +41,7 @@ COMMANDS = {
     "test",
     "commit",
     "init",
+    "documentation",
 }
 SKILLS = {
     "audit-first",
@@ -59,6 +60,7 @@ SKILLS = {
     "android",
     "kmm",
     "design-routing",
+    "minimal-code",
 }
 KNOWLEDGE = {
     "build-patterns.md",
@@ -74,6 +76,7 @@ KNOWLEDGE = {
     "android.md",
     "kmm.md",
     "design-routing.md",
+    "minimal-code.md",
 }
 SAFETY_PHRASES = {
     PLUGIN / "knowledge" / "core-principles.md": [
@@ -120,6 +123,10 @@ SAFETY_PHRASES = {
     PLUGIN / "commands" / "bugfix.md": ["## Gate Handling", "Do not write secrets"],
     PLUGIN / "commands" / "commit.md": ["Remote writes follow `Remote Write Safety`"],
     PLUGIN / "commands" / "pr.md": ["Remote writes follow `Remote Write Safety`"],
+    PLUGIN / "commands" / "documentation.md": [
+        "Do not edit source code",
+        "self-contained",
+    ],
     PLUGIN / "knowledge" / "php.md": [
         "Apply only when the project uses PHP",
         "## Clean Architecture",
@@ -138,6 +145,10 @@ SAFETY_PHRASES = {
     PLUGIN / "knowledge" / "design-routing.md": [
         "## Routing Matrix",
         "Hand-Build Principles",
+    ],
+    PLUGIN / "knowledge" / "minimal-code.md": [
+        "## The Reuse Ladder",
+        "The Floor — never cut these",
     ],
 }
 

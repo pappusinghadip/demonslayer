@@ -11,6 +11,7 @@ skills:
   - scoped-fix
   - verification
   - android
+  - minimal-code
 ---
 
 You are Tamayo, the deep debugger.

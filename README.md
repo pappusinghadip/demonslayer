@@ -31,6 +31,7 @@ The workflow is simple:
 - Test command for four-angle verification: unit/component, integration, E2E/user flow, and security.
 - Commit command built around staged-diff safety.
 - Project init command for generating local context.
+- Documentation command that traces a file or flow and renders a standalone HTML preview.
 - Natural routing skills for `kagaya`, `akaza`, and `tengen`.
 - Yushiro internal support for activity logs, reports, memory, and artifact housekeeping.
 
@@ -183,6 +184,7 @@ Commit safely:
 | `/slayer:pr` | PR preparation with diff review and approval gate |
 | `/slayer:report` | Activity summary from reports, memory, and artifacts |
 | `/slayer:init` | Create project context for this workflow |
+| `/slayer:documentation` | Document a file/module/flow and render a standalone HTML preview |
 
 ## Gated Lifecycles
 
@@ -404,6 +406,7 @@ Il flusso di lavoro è semplice:
 - Comando di test con verifica a quattro angolazioni: unità/componente, integrazione, E2E/flusso utente e sicurezza.
 - Comando di commit costruito attorno alla sicurezza del diff in stage.
 - Comando di init del progetto per generare il contesto locale.
+- Comando di documentazione che traccia un file o un flusso e genera un'anteprima HTML autonoma.
 - Skill di routing naturale per `kagaya`, `akaza` e `tengen`.
 - Supporto interno di Yushiro per log delle attività, report, memoria e gestione degli artefatti.
 
@@ -556,6 +559,7 @@ Committa in sicurezza:
 | `/slayer:pr` | Preparazione della PR con revisione del diff e gate di approvazione |
 | `/slayer:report` | Riepilogo delle attività da report, memoria e artefatti |
 | `/slayer:init` | Crea il contesto di progetto per questo flusso di lavoro |
+| `/slayer:documentation` | Documenta un file/modulo/flusso e genera un'anteprima HTML autonoma |
 
 ## Cicli di Vita con Gate
 
