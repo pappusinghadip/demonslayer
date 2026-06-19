@@ -1,5 +1,7 @@
 # Slayer Agents
 
+> 🇬🇧 **English** below · 🇮🇹 [**Italiano** più in basso](#slayer-agents--italiano)
+
 Audit-first AI coding agents for Claude Code workflows.
 
 Slayer Agents is a Claude Code-style plugin that gives you a small, opinionated squad of specialist agents for real software work: repo audits, scoped fixes, debugging, research, code review, verification, PR preparation, reporting, and git-safe delivery.
@@ -366,3 +368,376 @@ Run validation after version or metadata changes.
 ## License
 
 No open-source license has been added yet. Unless a `LICENSE` file is added, all rights are reserved by the repository owner.
+
+---
+
+# Slayer Agents — Italiano
+
+> 🇮🇹 **Italiano** · 🇬🇧 [**Back to English / torna all'inglese**](#slayer-agents)
+
+Agenti di coding AI "audit-first" per i flussi di lavoro di Claude Code.
+
+Slayer Agents è un plugin in stile Claude Code che mette a disposizione una piccola squadra, con una sua filosofia precisa, di agenti specializzati per il lavoro software reale: audit del repository, correzioni circoscritte, debugging, ricerca, revisione del codice, verifica, preparazione delle PR, reportistica e consegna sicura tramite git.
+
+Il cast è ispirato a Demon Slayer. Il Corpo degli Ammazzademoni si occupa di costruire, pianificare e revisionare; due demoni — **Doma** e **Akaza** — formano il red-team avversario che cerca i buchi di sicurezza e rompe il codice debole prima che lo facciano gli utenti. **Gli Slayer costruiscono; i demoni rompono.** Ogni agente, demone o meno, segue le stesse regole di sicurezza: i revisori in sola lettura non modificano mai il worktree, i segreti non vengono mai stampati o registrati, e nulla viene pushato o pubblicato senza approvazione esplicita.
+
+Il flusso di lavoro è semplice:
+
+1. Capire il vero percorso di esecuzione.
+2. Pianificare prima di modificare.
+3. Apportare modifiche circoscritte.
+4. Revisionare e verificare.
+5. Committare solo ciò che era previsto.
+
+> Progetto amatoriale a tema. Questo repository non è affiliato, sponsorizzato o approvato da Koyoharu Gotouge, Shueisha, Aniplex, ufotable o alcun titolare di diritti correlato.
+
+## Funzionalità
+
+- Comando di audit in sola lettura per tracciare i veri percorsi del codice.
+- Comando per il ciclo di vita completo e con gate di una feature: raccolta, ricerca, piano, build, revisione più test e riepilogo.
+- Comando per il ciclo di vita completo e con gate di un bugfix: raccolta, indagine, piano di fix, fix, verifica e riepilogo.
+- Comando di pianificazione per le note di implementazione prima delle modifiche.
+- Comandi di ricerca, spiegazione, brainstorming, refactoring, report e PR.
+- Comando di fix circoscritto per le modifiche approvate.
+- Comando di debug per indagini sulla causa radice.
+- Comando di revisione con riscontri per file e riga.
+- Comando di test con verifica a quattro angolazioni: unità/componente, integrazione, E2E/flusso utente e sicurezza.
+- Comando di commit costruito attorno alla sicurezza del diff in stage.
+- Comando di init del progetto per generare il contesto locale.
+- Skill di routing naturale per `kagaya`, `akaza` e `tengen`.
+- Supporto interno di Yushiro per log delle attività, report, memoria e gestione degli artefatti.
+
+## La Squadra
+
+| Agente | Ruolo |
+|---|---|
+| Kagaya Ubuyashiki | Orchestratore principale, pianificazione, coordina gli agenti |
+| Tanjiro Kamado | Implementazione, architettura, automazione, ingegneria complessa |
+| Mitsuri Kanroji | UI/UX, frontend, flussi utente |
+| Tamayo | Debugging approfondito, casi limite insoliti, indagini difficili |
+| Doma 🩸 | Revisione di sicurezza, audit sospetti, controlli su autenticazione e fughe di dati (red-team demone) |
+| Obanai Iguro | Revisione del codice, riscontri precisi per file e riga |
+| Akaza 🩸 | Stress test, casi limite, pressione sulle prestazioni (red-team demone) |
+| Zenitsu Agatsuma | Correzioni piccole e circoscritte, modifiche chirurgiche |
+| Gyomei Himejima | Integrità dei dati, affidabilità del backend, progettazione difensiva |
+| Tengen Uzui | Git, coordinamento dei rilasci, sicurezza dei diff in stage, checklist finale |
+
+Supporto interno:
+
+| Agente | Ruolo |
+|---|---|
+| Yushiro | Registrazione delle attività, report, scritture in memoria, gestione degli artefatti |
+
+## Installazione
+
+### Opzione 1: Installazione da GitHub in Claude Code
+
+Quando il repository è disponibile su GitHub:
+
+```bash
+/plugin marketplace add pappusinghadip/demonslayer
+/plugin install slayer@slayer-agents
+```
+
+Poi usa gli slash command:
+
+```text
+/slayer:audit explain the auth flow
+/slayer:feature add passkey login
+/slayer:bugfix users cannot log in after password reset
+/slayer:research auth flow
+/slayer:explain checkout module
+/slayer:plan add passkey login
+/slayer:review staged changes
+```
+
+Puoi anche usare il routing naturale in Claude Code:
+
+```text
+kagaya, build a search bar
+akaza, test the auth flow
+tengen, prepare the commit
+```
+
+### Opzione 2: Esecuzione locale da un clone
+
+Clona il repository:
+
+```bash
+git clone git@github.com:pappusinghadip/demonslayer.git
+cd demonslayer
+```
+
+Avvia Claude Code con la directory del plugin:
+
+```bash
+claude --plugin-dir "$PWD/plugins/slayer"
+```
+
+Per l'attuale workspace locale:
+
+```bash
+claude --plugin-dir /Users/pappusingha/Documents/MyAgent/slayer-agents/plugins/slayer
+```
+
+## Avvio Rapido
+
+Inizializza il contesto del progetto in qualsiasi repo:
+
+```text
+/slayer:init
+```
+
+Esegui un audit prima di apportare modifiche:
+
+```text
+/slayer:audit why does /admin redirect to login
+```
+
+Crea un piano prima dell'implementazione:
+
+```text
+/slayer:plan add a manual passkey check after password login
+```
+
+Esegui un ciclo di vita completo di feature:
+
+```text
+/slayer:feature add a manual passkey check after password login
+```
+
+Esegui un ciclo di vita completo di bugfix:
+
+```text
+/slayer:bugfix login fails after password reset
+```
+
+Implementa una modifica circoscritta approvata:
+
+```text
+/slayer:fix implement the approved passkey plan
+```
+
+Revisiona il codice modificato:
+
+```text
+/slayer:review staged changes
+```
+
+Prepara una PR:
+
+```text
+/slayer:pr target main
+```
+
+Committa in sicurezza:
+
+```text
+/slayer:commit latest fix
+```
+
+## Comandi
+
+| Comando | Scopo |
+|---|---|
+| `/slayer:audit` | Audit del repository in sola lettura e tracciamento del percorso di esecuzione |
+| `/slayer:brainstorm` | Confronta opzioni e compromessi prima di costruire |
+| `/slayer:plan` | Crea un piano di implementazione prima di modificare |
+| `/slayer:feature` | Raccolta -> ricerca -> piano -> build -> revisione più test -> riepilogo |
+| `/slayer:bugfix` | Raccolta -> indagine -> piano di fix -> fix -> verifica -> riepilogo |
+| `/slayer:fix` | Implementa una modifica circoscritta approvata |
+| `/slayer:debug` | Debugging sulla causa radice con approvazione prima delle fix |
+| `/slayer:explain` | Spiegazione a livelli del codice o della feature |
+| `/slayer:research` | Ricerca approfondita in sola lettura da più angolazioni |
+| `/slayer:refactor` | Refactoring guidato dalla revisione con gate di approvazione |
+| `/slayer:review` | Revisione del codice e passaggio sui rischi di sicurezza |
+| `/slayer:test` | Verifica a quattro angolazioni, stress e controlli sui casi limite |
+| `/slayer:commit` | Revisione del diff in stage e flusso di commit sicuro |
+| `/slayer:pr` | Preparazione della PR con revisione del diff e gate di approvazione |
+| `/slayer:report` | Riepilogo delle attività da report, memoria e artefatti |
+| `/slayer:init` | Crea il contesto di progetto per questo flusso di lavoro |
+
+## Cicli di Vita con Gate
+
+Lo stato del ciclo di vita viene scritto sotto `.slayer/.temp/`. Se il contesto viene compresso o un terminale viene chiuso, riprendi leggendo lo `status.md` del task e i file di fase. I comandi verificano che `.slayer/.temp/` sia nel gitignore prima di scrivere gli artefatti.
+
+### Ciclo di Vita della Feature
+
+```text
+/slayer:feature build a search bar
+
+Fase 0   Raccolta          Requisiti. Definizione di "fatto". Risorse esistenti.
+Fase 1   Ricerca           Gli Slayer esplorano il codice da più angolazioni in parallelo.
+          GATE             Conferma la comprensione prima di pianificare.
+Fase 2   Piano             Decisioni di architettura, blocchi, rischi e verifica.
+          GATE             Approva il piano prima delle modifiche al codice.
+Fase 3   Build             Gli Slayer eseguono secondo il piano approvato.
+          GATE             Revisiona ciò che è stato costruito.
+Fase 4   Revisione + Test  Obanai Iguro revisiona. Doma controlla i percorsi sensibili. Akaza verifica da quattro angolazioni.
+          GATE             Decidi quali riscontri correggere, rinviare o accettare.
+Fase 5   Riepilogo         Cosa è stato costruito, decisioni prese, esito dei test e note riutilizzabili.
+```
+
+### Ciclo di Vita del Bugfix
+
+```text
+/slayer:bugfix users cannot log in after SSO
+
+Fase 0   Raccolta          Dettagli del bug, log, screenshot, impatto e cronologia.
+Fase 1   Indagine          Tamayo risale dai sintomi alla causa radice.
+          GATE             Conferma la causa radice prima di qualsiasi tentativo di fix.
+Fase 2   Piano di Fix      Fix proposta, raggio d'impatto, rollback e verifica.
+          GATE             Approva l'approccio prima delle modifiche al codice.
+Fase 3   Fix               Lo Slayer giusto esegue la fix.
+          GATE             Revisiona la fix.
+Fase 4   Verifica          Obanai Iguro revisiona. Doma controlla i percorsi sensibili. Akaza conferma che il bug è sparito.
+Fase 5   Riepilogo         Causa radice, fix, verifica e regola decisionale riutilizzabile.
+```
+
+Yushiro può registrare l'output del ciclo di vita in `.slayer/reports/activity.log` e salvare regole decisionali riutilizzabili in `.slayer/memory/`.
+
+## Flusso di Lavoro Consigliato
+
+### Per Nuove Feature
+
+```text
+/slayer:feature build the new feature
+/slayer:commit feature summary
+```
+
+### Per i Bug
+
+```text
+/slayer:bugfix paste the error or describe the failing behavior
+/slayer:commit bugfix summary
+```
+
+Usa `/slayer:plan` più `/slayer:fix` quando vuoi suddividere il ciclo di vita manualmente. Usa `/slayer:research`, `/slayer:explain` o `/slayer:brainstorm` quando vuoi capire prima di qualsiasi piano.
+
+### Per il Passaggio a Git
+
+```text
+/slayer:review staged changes
+/slayer:commit commit message or context
+```
+
+Tengen Uzui è volutamente focalizzato sul diff in stage. Il flusso di commit non dovrebbe usare lo staging massivo a meno che non sia richiesto esplicitamente.
+
+## Come gli Agenti Instradano il Lavoro
+
+- Kagaya Ubuyashiki coordina il lavoro più ampio.
+- Tanjiro Kamado gestisce implementazione complessa e automazione.
+- Mitsuri Kanroji gestisce frontend e flussi rivolti all'utente.
+- Tamayo gestisce il debugging difficile.
+- Gyomei Himejima gestisce affidabilità del backend, persistenza e sicurezza dei dati.
+- Zenitsu Agatsuma gestisce le piccole patch a basso rischio.
+- Obanai Iguro revisiona il codice.
+- Doma revisiona i percorsi sensibili alla sicurezza.
+- Akaza verifica casi limite, casi di stress e regressioni.
+- Tengen Uzui gestisce git, i controlli di rilascio e l'igiene finale dei commit.
+- Yushiro gestisce in silenzio report, memoria e log delle attività in `.slayer/`.
+
+## Struttura del Repository
+
+```text
+slayer-agents/
+├── .claude-plugin/
+│   └── marketplace.json
+├── .codex-plugin/
+│   └── plugin.json
+├── plugins/
+│   └── slayer/
+│       ├── .claude-plugin/
+│       │   └── plugin.json
+│       ├── agents/
+│       ├── commands/
+│       ├── hooks/
+│       ├── knowledge/
+│       └── skills/
+├── scripts/
+│   └── validate_slayer.py
+├── skills/
+│   └── slayer-agents/
+│       └── SKILL.md
+├── CLAUDE.md
+└── README.md
+```
+
+## Validazione
+
+Esegui il validatore della struttura:
+
+```bash
+python3 scripts/validate_slayer.py
+```
+
+Output atteso:
+
+```text
+OK: Slayer Agents structure is valid
+```
+
+Il validatore controlla che:
+
+- esistano tutti i 10 file degli agenti pubblici e l'agente di supporto interno Yushiro;
+- esistano tutti i file dei comandi;
+- esistano le skill di routing e di regole condivise;
+- esistano i file degli hook;
+- esistano le skill e i file di conoscenza richiesti;
+- i riferimenti alle skill negli agenti si risolvano;
+- le versioni del plugin Claude coincidano;
+- non siano presenti identificatori di riferimento upstream.
+
+## Sviluppo
+
+Quando modifichi il plugin:
+
+1. Aggiorna i file di agenti, comandi, skill o conoscenza sotto `plugins/slayer`.
+2. Esegui la validazione.
+3. Testa in locale con `claude --plugin-dir "$PWD/plugins/slayer"`.
+4. Committa solo i file voluti.
+
+Comandi utili:
+
+```bash
+python3 scripts/validate_slayer.py
+git status --short --branch
+git diff --cached --name-status
+```
+
+## Regole di Sicurezza Git
+
+Tengen Uzui segue queste regole:
+
+- inizia con `git status --short --branch`;
+- ispeziona i file in stage con `git diff --cached --name-status`;
+- ispeziona il vero diff in stage prima del commit;
+- non dare mai per scontato che i file non tracciati siano inclusi;
+- non usare mai `git add .` se non esplicitamente approvato;
+- le scritture remote seguono `Remote Write Safety` in `plugins/slayer/knowledge/core-principles.md`;
+- non duplicare né indebolire la regola centrale sulle scritture remote nei documenti dei comandi o degli agenti.
+
+## Stato Generato
+
+Lo stato del flusso di lavoro generato dovrebbe restare fuori dai commit normali:
+
+```text
+.slayer/.temp/
+.claude/slayer/.temp/
+```
+
+Il contesto di progetto e la memoria possono essere creati da `/slayer:init` dentro un repository target.
+
+## Versionamento
+
+Mantieni allineate queste versioni:
+
+- `.claude-plugin/marketplace.json`
+- `plugins/slayer/.claude-plugin/plugin.json`
+- `.codex-plugin/plugin.json`
+
+Esegui la validazione dopo modifiche a versione o metadati.
+
+## Licenza
+
+Non è ancora stata aggiunta alcuna licenza open-source. A meno che non venga aggiunto un file `LICENSE`, tutti i diritti sono riservati al proprietario del repository.
