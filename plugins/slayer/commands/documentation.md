@@ -16,7 +16,7 @@ Goal: explain how the target actually works — its real flow and every meaningf
 2. Explain intent, not just mechanics. For the file or class, say why it exists and what purpose it serves; for each public method, say what it is for and why a caller would use it.
 3. Do not edit source code. The only file you write is the HTML documentation artifact.
 4. Cite real files with `path:line` references for each claim.
-5. Keep the HTML self-contained: one `.html` file, inline CSS, no external scripts, fonts, or network calls. It must open offline.
+5. Keep the HTML self-contained except for a single pinned Mermaid script from a CDN, used only to render diagrams. Inline all CSS. The report must stay readable offline — each diagram's source sits in its `.mermaid` block as the fallback when the script does not load.
 6. Apply `minimal-code` to the page — clean and readable, no framework, no bloat.
 7. State what is verified and what remains uncertain. Never embed secrets, tokens, or real credentials.
 
@@ -45,6 +45,7 @@ Document each of these, in order. Explain not just WHAT the code does but WHY it
 - Entry points: how it is called or routed, with file references.
 - Inputs and outputs: parameters, request shape, return or response, types.
 - Step-by-step flow: each meaningful step in order, with the branch conditions and the reason for each branch.
+- Diagrams: a Mermaid `sequenceDiagram` of the runtime flow (objects and methods over time), and a Mermaid C4 (`C4Context` or `C4Container`) diagram showing where this fits and what it talks to. Generate only the diagrams that add value for the target. Use real participant and method names from the traced path.
 - Dependencies: what it calls, what calls it, and why each dependency is needed.
 - Data and side effects: database reads/writes, files, cache, external services.
 - Error handling: each failure path and what happens on it.
@@ -70,7 +71,7 @@ Structure, top to bottom:
 
 Requirements:
 
-- One self-contained `.html` file: inline `<style>` only, no external scripts, fonts, CSS, or network calls. It must render offline.
+- One `.html` file with inline `<style>`. The only external resource is a single pinned Mermaid script used to render diagrams; everything else stays inline. Offline, the report is still readable — each diagram's source shows in its `.mermaid` block as fallback.
 - Clean, readable, print-friendly: a centered max-width container, system font stack, clear heading hierarchy, styled `<code>`/`<pre>` blocks for flow and snippets, and a simple metadata table.
 - Render the step-by-step flow as an ordered list with the branch condition on each step.
 - Keep file references as visible `path:line` text inside `<code>`.
@@ -105,7 +106,10 @@ Follow this skeleton — fill in the content, keep the markup minimal and valid:
   .callout { border-left:4px solid var(--accent); background:#fbeeee; padding:10px 14px; border-radius:0 6px 6px 0; margin:12px 0; }
   .callout.warn { border-color:var(--warn); background:#fff4e8; }
   footer { margin-top:40px; padding-top:12px; border-top:1px solid var(--line); color:var(--muted); font-size:.85rem; }
+  .mermaid { white-space:pre; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; background:#fafafa; border:1px solid var(--line); border-radius:8px; padding:14px; margin:12px 0; overflow:auto; }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.mermaid){mermaid.initialize({startOnLoad:true,securityLevel:"strict"});}});</script>
 </head>
 <body>
 <main>
@@ -119,6 +123,27 @@ Follow this skeleton — fill in the content, keep the markup minimal and valid:
   <p><!-- why this file/class exists, the problem it solves, what it is responsible for --></p>
   <h2 id="overview">Overview</h2>
   <!-- ...one section per Sections item... -->
+  <h2 id="diagrams">Diagrams</h2>
+  <h3>Runtime flow</h3>
+  <div class="mermaid">
+sequenceDiagram
+  participant Caller
+  participant Target as TARGET
+  Caller->>Target: method(args)
+  Target->>Dependency: call()
+  Dependency-->>Target: result
+  Target-->>Caller: return
+  </div>
+  <h3>Where it fits (C4)</h3>
+  <div class="mermaid">
+C4Context
+title System context for TARGET
+Person(user, "Caller")
+System(sys, "This system", "contains TARGET")
+System_Ext(ext, "External dependency")
+Rel(user, sys, "uses")
+Rel(sys, ext, "calls")
+  </div>
   <div class="callout"><strong>Security:</strong> <!-- ... --></div>
   <div class="callout warn"><strong>Open questions:</strong> <!-- ... --></div>
   <h2 id="references">References</h2>
