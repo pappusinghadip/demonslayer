@@ -45,7 +45,11 @@ Document each of these, in order. Explain not just WHAT the code does but WHY it
 - Entry points: how it is called or routed, with file references.
 - Inputs and outputs: parameters, request shape, return or response, types.
 - Step-by-step flow: each meaningful step in order, with the branch conditions and the reason for each branch.
-- Diagrams: a Mermaid `sequenceDiagram` of the runtime flow (objects and methods over time), and a Mermaid C4 (`C4Context` or `C4Container`) diagram showing where this fits and what it talks to. Generate only the diagrams that add value for the target. Use real participant and method names from the traced path.
+- Diagrams (use Mermaid; keep them clean and professional):
+  - Runtime flow: a `sequenceDiagram` of calls between objects and methods over time. This is the primary "how it works" view.
+  - Control flow (optional): for a function with significant branching, a `flowchart TB` of its steps and branch conditions.
+  - Where it fits: a C4-style container view drawn as a `flowchart TB` — a `subgraph` for the system boundary plus `classDef`-styled person/container/database/external nodes. Do NOT use Mermaid's native `C4Context`/`C4Container` syntax: its auto-layout overlaps labels and looks unprofessional.
+  - Lay diagrams out top-to-bottom, keep edge labels short, group related nodes, and draw only the key relationships (per `minimal-code`). Use real names from the traced path.
 - Dependencies: what it calls, what calls it, and why each dependency is needed.
 - Data and side effects: database reads/writes, files, cache, external services.
 - Error handling: each failure path and what happens on it.
@@ -72,6 +76,7 @@ Structure, top to bottom:
 Requirements:
 
 - One `.html` file with inline `<style>`. The only external resource is a single pinned Mermaid script used to render diagrams; everything else stays inline. Offline, the report is still readable — each diagram's source shows in its `.mermaid` block as fallback.
+- Diagrams must be clean and professional: vertical `flowchart TB` layout, short edge labels, `subgraph` boundaries, and `classDef` styling. No overlapping labels. If a graph has many crossing edges, reduce it to the key relationships or split it. Never use native `C4Context`/`C4Container` — its layout overlaps.
 - Clean, readable, print-friendly: a centered max-width container, system font stack, clear heading hierarchy, styled `<code>`/`<pre>` blocks for flow and snippets, and a simple metadata table.
 - Render the step-by-step flow as an ordered list with the branch condition on each step.
 - Keep file references as visible `path:line` text inside `<code>`.
@@ -134,15 +139,22 @@ sequenceDiagram
   Dependency-->>Target: result
   Target-->>Caller: return
   </div>
-  <h3>Where it fits (C4)</h3>
+  <h3>Where it fits (C4 container view)</h3>
   <div class="mermaid">
-C4Context
-title System context for TARGET
-Person(user, "Caller")
-System(sys, "This system", "contains TARGET")
-System_Ext(ext, "External dependency")
-Rel(user, sys, "uses")
-Rel(sys, ext, "calls")
+flowchart TB
+  user["App code<br/><small>controllers, models</small>"]:::person
+  subgraph sys["This system"]
+    target["TARGET<br/><small>responsibility</small>"]:::container
+    dep["Collaborator<br/><small>role</small>"]:::container
+  end
+  db[("Datastore<br/><small>via driver</small>")]:::database
+  user -->|"calls method()"| target
+  target -->|"delegates"| dep
+  target -->|"reads / writes"| db
+  classDef person fill:#08427b,stroke:#052e56,color:#fff
+  classDef container fill:#1168bd,stroke:#0b4884,color:#fff
+  classDef database fill:#1168bd,stroke:#0b4884,color:#fff
+  classDef external fill:#8a8a8a,stroke:#5f5f5f,color:#fff
   </div>
   <div class="callout"><strong>Security:</strong> <!-- ... --></div>
   <div class="callout warn"><strong>Open questions:</strong> <!-- ... --></div>
