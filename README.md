@@ -185,6 +185,7 @@ Commit safely:
 | `/slayer:report` | Activity summary from reports, memory, and artifacts |
 | `/slayer:init` | Create project context for this workflow |
 | `/slayer:documentation` | Document a file/module/flow and render an HTML report with C4 + sequence diagrams |
+| `/slayer:handoff` | Compact the conversation into a handoff doc to resume in a fresh session |
 
 ## Gated Lifecycles
 
@@ -560,6 +561,7 @@ Committa in sicurezza:
 | `/slayer:report` | Riepilogo delle attività da report, memoria e artefatti |
 | `/slayer:init` | Crea il contesto di progetto per questo flusso di lavoro |
 | `/slayer:documentation` | Documenta un file/modulo/flusso e genera un report HTML con diagrammi C4 e di sequenza |
+| `/slayer:handoff` | Comprime la conversazione in un documento di handoff per riprendere in una sessione nuova |
 
 ## Cicli di Vita con Gate
 

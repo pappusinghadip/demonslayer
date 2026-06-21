@@ -42,6 +42,7 @@ COMMANDS = {
     "commit",
     "init",
     "documentation",
+    "handoff",
 }
 SKILLS = {
     "audit-first",
@@ -126,6 +127,10 @@ SAFETY_PHRASES = {
     PLUGIN / "commands" / "documentation.md": [
         "Do not edit source code",
         "self-contained",
+    ],
+    PLUGIN / "commands" / "handoff.md": [
+        "Redact secrets",
+        "Do not edit source code",
     ],
     PLUGIN / "knowledge" / "php.md": [
         "Apply only when the project uses PHP",
