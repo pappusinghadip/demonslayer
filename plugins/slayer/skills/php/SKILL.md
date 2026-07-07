@@ -5,3 +5,4 @@ user-invocable: false
 ---
 
 @${CLAUDE_PLUGIN_ROOT}/knowledge/php.md
+@${CLAUDE_PLUGIN_ROOT}/knowledge/integraa-querybuilder.md
