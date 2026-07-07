@@ -32,6 +32,7 @@ The workflow is simple:
 - Commit command built around staged-diff safety.
 - Project init command for generating local context.
 - Documentation command that traces a file or flow and renders an HTML report with Mermaid C4 and sequence diagrams.
+- IntegraaQuery command that enforces the IntegraaNetwork query builder (`Model()->get/save/delete`) over raw SQL.
 - Natural routing skills for `kagaya`, `akaza`, and `tengen`.
 - Yushiro internal support for activity logs, reports, memory, and artifact housekeeping.
 
@@ -186,6 +187,7 @@ Commit safely:
 | `/slayer:init` | Create project context for this workflow |
 | `/slayer:documentation` | Document a file/module/flow and render an HTML report with C4 + sequence diagrams |
 | `/slayer:handoff` | Compact the conversation into a handoff doc to resume in a fresh session |
+| `/slayer:integraaquery` | Implement an IntegraaNetwork DB read/write through the query builder, never raw SQL |
 
 ## Gated Lifecycles
 

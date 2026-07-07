@@ -1,6 +1,6 @@
 {
   "name": "slayer-agents",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "Private audit-first engineering agents for local coding workflows.",
   "author": {
     "name": "Pappu Singha"
